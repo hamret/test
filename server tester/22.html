@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSV 라벨링 툴</title>
+    <meta charset="UTF-8"> <style>
+        body { font-family: sans-serif; }
+        .container { width: 80%; margin: 0 auto; padding: 20px; }
+        .text-container { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSV 라벨링 툴</h1>
+
+        {% if data and 'error' in data %}
+            <p style="color: red;">{{ data['error'] }}</p>
+        {% elif data and 'message' in data %}
+            <p>{{ data['message'] }}</p>
+        {% elif data %}
+            <div class="text-container">
+                <p><strong>영문 원문:</strong> <span id="original-text">{{ data['original'] }}</span></p>
+                <p><strong>한글 번역:</strong> <span id="translated-text">{{ data['translated'] }}</span></p>
+            </div>
+            <div>
+                <form action="/save_label" method="post">
+                    <label for="label">라벨:</label>
+                    <input type="text" id="label" name="label"><br><br>
+                    <button type="submit">저장</button>
+                </form>
+            </div>
+        {% else %}
+            <p>데이터를 불러오는 중...</p>
+        {% endif %}
+    </div>
+</body>
+</html>
